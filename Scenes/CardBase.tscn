@@ -1,0 +1,121 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvfrwfohcsctx"]
+
+[ext_resource type="Script" path="res://Scripts/CardBase.gd" id="1_2evum"]
+[ext_resource type="Texture2D" uid="uid://bqmpoq71cirsp" path="res://Art/Cards/backgrounds/bg_clear.png" id="2_kem3x"]
+
+[node name="CardBase" type="MarginContainer"]
+offset_right = 250.0
+offset_bottom = 350.0
+pivot_offset = Vector2(125, 175)
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+script = ExtResource("1_2evum")
+
+[node name="CardImg" type="Sprite2D" parent="."]
+texture = ExtResource("2_kem3x")
+centered = false
+
+[node name="Border" type="Sprite2D" parent="."]
+visible = false
+
+[node name="Bars" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopGap" type="MarginContainer" parent="Bars"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="TopBar" type="HBoxContainer" parent="Bars"]
+layout_mode = 2
+
+[node name="LeftGap" type="MarginContainer" parent="Bars/TopBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Name" type="MarginContainer" parent="Bars/TopBar"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="Bars/TopBar/Name"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/TopBar/Name"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="Bars/TopBar/Name/CenterContainer"]
+layout_mode = 2
+text = "Name"
+
+[node name="MidGap" type="MarginContainer" parent="Bars/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Power" type="MarginContainer" parent="Bars/TopBar"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="Bars/TopBar/Power"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/TopBar/Power"]
+layout_mode = 2
+
+[node name="Power" type="Label" parent="Bars/TopBar/Power/CenterContainer"]
+layout_mode = 2
+text = "4	"
+
+[node name="RightGap" type="MarginContainer" parent="Bars/TopBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="MidGap" type="MarginContainer" parent="Bars"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomBar" type="HBoxContainer" parent="Bars"]
+layout_mode = 2
+
+[node name="LeftGap" type="MarginContainer" parent="Bars/BottomBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="SpecialText" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="Bars/BottomBar/SpecialText"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/BottomBar/SpecialText"]
+layout_mode = 2
+
+[node name="SpecialText" type="Label" parent="Bars/BottomBar/SpecialText/CenterContainer"]
+layout_mode = 2
+text = "Just a sword"
+
+[node name="MidGap" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Color" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="Bars/BottomBar/Color"]
+visible = false
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/BottomBar/Color"]
+layout_mode = 2
+
+[node name="Color" type="Label" parent="Bars/BottomBar/Color/CenterContainer"]
+layout_mode = 2
+text = "White
+"
+
+[node name="RightGap" type="MarginContainer" parent="Bars/BottomBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="BottomGap" type="MarginContainer" parent="Bars"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2

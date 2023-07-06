@@ -1,0 +1,1 @@
+var cardList = ["SwordWhite", "BubbleWhite"]

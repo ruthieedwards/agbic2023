@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://cowggk63rr3xm"]
+
+[ext_resource type="Script" path="res://Playspace.gd" id="1_snowq"]
+[ext_resource type="Texture2D" uid="uid://dngud0is0bgn4" path="res://Art/Backgrounds/winxpBG.jpg" id="2_a48r0"]
+[ext_resource type="Texture2D" uid="uid://bqmpoq71cirsp" path="res://Art/Cards/backgrounds/bg_clear.png" id="3_so6uk"]
+[ext_resource type="Texture2D" uid="uid://b6mlbwbewr42c" path="res://Art/Cards/backgrounds/bg_deck_empty.png" id="4_qfn0d"]
+[ext_resource type="Script" path="res://Scenes/DeckDraw.gd" id="5_ieepd"]
+
+[node name="Playspace" type="Node2D"]
+script = ExtResource("1_snowq")
+
+[node name="Cards" type="Node" parent="."]
+
+[node name="BackgroundImage" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_a48r0")
+
+[node name="Deck" type="Node2D" parent="."]
+
+[node name="DeckDraw" type="TextureButton" parent="Deck"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture_normal = ExtResource("3_so6uk")
+texture_pressed = ExtResource("3_so6uk")
+texture_hover = ExtResource("3_so6uk")
+texture_disabled = ExtResource("4_qfn0d")
+script = ExtResource("5_ieepd")
