@@ -20,6 +20,16 @@ var randomCardSelected = []
 var startingAngle = deg_to_rad(90) - 0.5 # pi/2
 var ovalAngleVector = Vector2()
 
+# i feel like this shouldn't be here but it is
+enum{
+	inHand,
+	inPlay,
+	inMouse,
+	focusedInHand,
+	movingDrawnCardToHand,
+	reorganizingHand,
+}
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -36,8 +46,11 @@ func drawACard():
 	
 	#place the card along an oval
 	ovalAngleVector = Vector2(horizRadius * cos(startingAngle), - vertRadius * sin(startingAngle))
-	newCard.position = centerCardOval + ovalAngleVector - newCard.size/2
-	newCard.rotation = (PI/2 - startingAngle)/4 
+	newCard.startPos = $Deck.position #- newCard.size/2
+	newCard.targetPos = centerCardOval + ovalAngleVector - newCard.size/2
+	newCard.startRot = 0
+	newCard.targetRot = (PI/2 - startingAngle)/4 
+	newCard.currentCardState = movingDrawnCardToHand
 	
 	print("deckSize =", deckSize)
 	print("randomCardSelected =", randomCardSelected)

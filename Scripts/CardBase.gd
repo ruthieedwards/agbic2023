@@ -10,7 +10,11 @@ extends MarginContainer
 var cardName
 var startPos = 0
 var targetPos = 0
+var startRot = 0
+var targetRot = 0
 var t = 0
+@export var drawTime =  .5 #time in seconds to draw card
+
 
 # these were moved to the _ready() function
 #@onready var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
@@ -27,10 +31,10 @@ enum{
 	reorganizingHand,
 }
 
-var state = inHand
+var currentCardState = inHand
 
 func _physics_process(delta):
-	match state:
+	match currentCardState:
 		inHand:
 			pass
 		inPlay:
@@ -40,8 +44,16 @@ func _physics_process(delta):
 		focusedInHand:
 			pass
 		movingDrawnCardToHand: # animate from deck to hand
-			pass
-			position = startPos.linear_interpolate(targetPos,t)
+			if t <= 1: # while the timer is counting down
+				position = startPos.lerp(targetPos,t) # moves from deck to hand
+				rotation = startRot * (1-t) + targetRot*t # rotates from deck to hand
+				t += delta/float(drawTime) # essentially a timer
+			else: #if the time goes over by accident
+				position = targetPos
+				rotation = targetRot
+				currentCardState = inHand
+				t = 0
+			#TO DO: flip the card (vid 3 - I skipped this step)
 		reorganizingHand:
 			pass
 			
