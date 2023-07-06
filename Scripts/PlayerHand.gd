@@ -1,1 +1,1 @@
-var cardList = ["SwordWhite", "BubbleWhite"]
+var cardList = ["SwordWhite", "BubbleWhite", "SwordWhite", "BubbleWhite"]

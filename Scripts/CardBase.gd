@@ -8,16 +8,45 @@ extends MarginContainer
 #@onready var cardDatabaseTemp = cardDatabase.new()
 
 var cardName
+var startPos = 0
+var targetPos = 0
+var t = 0
 
 # these were moved to the _ready() function
 #@onready var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
 #var cardImg = str("res://art/cards/backgrounds/",cardInfo[0],"/",Cardname,".png")
 #@onready var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png")
 
+# building a "state engine"
+enum{
+	inHand,
+	inPlay,
+	inMouse,
+	focusedInHand,
+	movingDrawnCardToHand,
+	reorganizingHand,
+}
 
-func _init():
-	pass
-	
+var state = inHand
+
+func _physics_process(delta):
+	match state:
+		inHand:
+			pass
+		inPlay:
+			pass
+		inMouse:
+			pass
+		focusedInHand:
+			pass
+		movingDrawnCardToHand: # animate from deck to hand
+			pass
+			position = startPos.linear_interpolate(targetPos,t)
+		reorganizingHand:
+			pass
+			
+			
+
 func _ready(): 
 	var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
 	var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png")
@@ -38,8 +67,3 @@ func _ready():
 	$Bars/TopBar/Power/CenterContainer/Power.text = str(power)
 	$Bars/BottomBar/SpecialText/CenterContainer/SpecialText.text = specialText
 	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
-
-
-## Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
