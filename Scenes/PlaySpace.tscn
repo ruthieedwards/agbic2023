@@ -9,7 +9,7 @@
 [node name="Playspace" type="Node2D"]
 script = ExtResource("1_snowq")
 
-[node name="Cards" type="Node" parent="."]
+[node name="CardsInHand" type="Node" parent="."]
 
 [node name="BackgroundImage" type="Sprite2D" parent="."]
 visible = false
@@ -25,3 +25,5 @@ texture_pressed = ExtResource("3_so6uk")
 texture_hover = ExtResource("3_so6uk")
 texture_disabled = ExtResource("4_qfn0d")
 script = ExtResource("5_ieepd")
+
+[node name="EnemyCards" type="Node" parent="."]

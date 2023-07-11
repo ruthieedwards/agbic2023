@@ -23,6 +23,9 @@ var cardSpread = 0.25
 var cardAngle = 0
 var cardNumber = 0
 var numCardsInHand = 0
+var isDealingCard = false
+
+@onready var deckPosition = $Deck.position
 
 # i feel like this shouldn't be here but it is
 enum{
@@ -39,11 +42,9 @@ enum{
 func _ready():
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 
 func drawACard():
+	
 	cardAngle = PI/2 + cardSpread*(float(numCardsInHand)/2 - numCardsInHand)
 	var newCard = cardBase.instantiate()
 	randomCardSelected = randi() % deckSize
@@ -51,40 +52,45 @@ func drawACard():
 	
 	#place the card along an oval
 	ovalAngleVector = Vector2(horizRadius * cos(cardAngle), - vertRadius * sin(cardAngle))
-	newCard.startPos = $Deck.position - newCard.size/2 # - cardSize/2 
+	#newCard.startPos = $Deck.position - newCard.size/2 # - cardSize/2 
+	newCard.startPos = $Deck.position - newCard.size/2 # - cardSize/2 #bugfix
 	newCard.targetPos = centerCardOval + ovalAngleVector - newCard.size/2
+	newCard.defaultCardPos = newCard.targetPos #sets a default position for when un-focusing it
 	newCard.startRot = 0
 	newCard.targetRot = (PI/2 - cardAngle)/4 
 	#newCard.scale *= cardSize/newCard.size #enable if scaling needed
 	newCard.currentCardState = movingDrawnCardToHand
 	
+	newCard.cardNumInHand = numCardsInHand
 	cardNumber = 0
 	
-	for card in $Cards.get_children(): # reorganize hand
+	for card in $CardsInHand.get_children(): # reorganize hand
 		cardAngle = PI/2 + cardSpread*(float(numCardsInHand)/2 - cardNumber) 
 		ovalAngleVector = Vector2(horizRadius * cos(cardAngle), - vertRadius * sin(cardAngle))
 #		card.startPos = card.position
 		card.targetPos = centerCardOval + ovalAngleVector - card.size/2 #- cardSize
+		card.defaultCardPos = card.targetPos
 		card.startRot = card.rotation
 		card.targetRot = (PI/2 - cardAngle)/4 
 #		card.targetRot = (90 - rad_to_deg(cardAngle))/4 #doesnt work?
-		
+		card.cardNumInHand = 0
 		cardNumber += 1
 		if card.currentCardState == inHand:
+			card.isSettingUp = true
 			card.currentCardState = reorganizingHand
-			card.startPos = card.position
+#			card.startPos = card.position #unneeded
 		elif card.currentCardState == movingDrawnCardToHand:
 			card.startPos = card.targetPos - ((card.targetPos - card.position)/(1-card.t))
-	
+
 
 	
 	print("deckSize =", deckSize)
-	print("randomCardSelected =", randomCardSelected)
+#	print("randomCardSelected =", randomCardSelected)
 	
 #	new_card.scale *= cardSize/new_card.size # enable if you need to resize the cards
-	$Cards.add_child(newCard)
-	print("newCard name: ",newCard.cardName)
-#		print("Cards Group Count =", $Cards.get_child_count())
+	$CardsInHand.add_child(newCard)
+#	print("newCard name: ",newCard.cardName)
+#	print("Cards Group Count =", $Cards.get_child_count())
 	playerHandTemp.cardList.erase(playerHandTemp.cardList[randomCardSelected])
 	cardAngle += 0.3
 	deckSize -= 1
