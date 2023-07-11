@@ -18,10 +18,11 @@ var t = 0
 @export var organizeTime = .1
 @export var zoomInTime = .1 #time in seconds to zoom in on a card
 @export var zoomOutTime = .1 #time in seconds to zoom out from a card
+@export var moveToMouseTime = .1 #time to move from hand to mouse position
 var isTweening = false
 var isSettingUp = true
 var startScale = Vector2(0,0)
-var zoomScale = 1.4
+var zoomScale = 1.2
 @onready var originalScale = scale
 var defaultCardPos = Vector2(0,0)
 var isReorganizingNeighbors = true
@@ -29,14 +30,21 @@ var numCardsInHand = 0
 var cardNumInHand
 var neighborCard
 var isMovingNeighborCard = false
-var currentCardState = inHand
+var cardJustSelected = false
+var lastCardState
 
-# these were moved to the _ready() function
-#@onready var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
-#var cardImg = str("res://art/cards/backgrounds/",cardInfo[0],"/",Cardname,".png")
-#@onready var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png")
+func _input(event):
+	match currentCardState:
+		focusedInHand, inMouse, inPlay:
+			if event.is_action_pressed("leftclick"): #pick up card
+				if cardJustSelected == false:
+					lastCardState = currentCardState #record whether the card was selected from hand or play
+					currentCardState = inMouse
+					isSettingUp = true
+					cardJustSelected = true
+					
+				
 
-# repeating the state engine here
 enum{
 	inHand,
 	inPlay,
@@ -46,6 +54,37 @@ enum{
 	reorganizingHand,
 }
 
+var currentCardState = inHand
+
+# these were moved to the _ready() function
+#@onready var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
+#var cardImg = str("res://art/cards/backgrounds/",cardInfo[0],"/",Cardname,".png")
+#@onready var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png")
+
+# repeating the state engine here
+
+
+func _ready(): #called when node enters the scene tree
+	var cardSize = size
+	var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
+	var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png") #loads image
+	$CardImg.texture = load(cardImg) #sets image as texture
+#	$Card.scale *= cardSize/$Card.texture.get_size() # scale card if needed
+#	$Border.scale *= cardSize/$Border.texture.get_size()
+#	$HoverFocus.scale *= cardSize/$HoverFocus.size()
+	
+	# grabbing all the card's properties
+	var power = cardInfo[1]
+	var simpleName = str(cardInfo[2])
+	var colorName = str(cardInfo[3])
+	var specialText = str(cardInfo[4])
+	
+	# setting all the card's text
+	$Bars/TopBar/Name/CenterContainer/Name.text = simpleName
+	$Bars/TopBar/Power/CenterContainer/Power.text = str(power)
+	$Bars/BottomBar/SpecialText/CenterContainer/SpecialText.text = specialText
+	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
+
 
 func _physics_process(delta):
 	match currentCardState:
@@ -53,24 +92,37 @@ func _physics_process(delta):
 			pass
 		inPlay:
 			pass
+
+
 		inMouse:
-			pass
+			if isSettingUp == true:
+				SetupTransition()
+			if t <= 1: 
+				position = startPos.lerp(get_global_mouse_position() - $"../../".cardSize,t) # move to target position
+				rotation = startRot * (1-t) + 0*t 
+				scale = startScale * (1-t) + originalScale*t #scale to original scale
+				t += delta/float(moveToMouseTime) # set transition time with organizeTime
+					
+			else: #if the time goes over by accident this essentially clamps it
+				position = get_global_mouse_position() - $"../../".cardSize/2 #added /2 to position it correctly
+				rotation = 0
 
 
 		focusedInHand:
-			print("isSettingUp : ",cardName,isSettingUp)
-#			if isSettingUp == true:
-#				SetupTransition() 
+#			print("isSettingUp : ",cardName,isSettingUp)
+			if isSettingUp == true:
+				SetupTransition() 
 				#disabled bc this was causing the middle cards not to work for some reason
 				#however it doesn't shift the cards over
+				#and the last card goes crazy
 			if t <= 1: 
-				print("zooming in: ",cardName)
-				print ("scale 1: ",scale)
+#				print("zooming in: ",cardName)
+#				print ("scale 1: ",scale)
 				position = startPos.lerp(targetPos,t) # moves from deck to hand
 				rotation = startRot * (1-t) + 0*t # + targetRot*t # rotates from deck to hand
 				scale = startScale * (1-t) + originalScale*zoomScale*t
 #				scale = Vector2(2,2)
-				print ("scale 2: ",scale)
+#				print ("scale 2: ",scale)
 				t += delta/float(zoomInTime) # timer
 				#reorganize neighboring cards while focused on one
 				if isReorganizingNeighbors == true:
@@ -170,7 +222,7 @@ func ResetCardOrganization(cardNumber): #set to original position
 			
 	
 func SetupTransition(): #grabs the starting properties for the card
-	print("setting up ",cardName)
+#	print("setting up ",cardName)
 	startPos = position
 	startRot = rotation
 	startScale = scale
@@ -178,26 +230,6 @@ func SetupTransition(): #grabs the starting properties for the card
 	isSettingUp = false
 			
 
-func _ready(): #called when node enters the scene tree
-	var cardSize = size
-	var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
-	var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png") #loads image
-	$CardImg.texture = load(cardImg) #sets image as texture
-#	$Card.scale *= cardSize/$Card.texture.get_size() # scale card if needed
-#	$Border.scale *= cardSize/$Border.texture.get_size()
-#	$HoverFocus.scale *= cardSize/$HoverFocus.size()
-	
-	# grabbing all the card's properties
-	var power = cardInfo[1]
-	var simpleName = str(cardInfo[2])
-	var colorName = str(cardInfo[3])
-	var specialText = str(cardInfo[4])
-	
-	# setting all the card's text
-	$Bars/TopBar/Name/CenterContainer/Name.text = simpleName
-	$Bars/TopBar/Power/CenterContainer/Power.text = str(power)
-	$Bars/BottomBar/SpecialText/CenterContainer/SpecialText.text = specialText
-	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
 
 
 func _on_hover_focus_mouse_entered():
