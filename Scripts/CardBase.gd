@@ -22,7 +22,7 @@ var t = 0
 var isTweening = false
 var isSettingUp = true
 var startScale = Vector2(0,0)
-var zoomScale = 1.2
+var zoomScale = 1.1
 @onready var originalScale = scale
 var defaultCardPos = Vector2(0,0)
 var isReorganizingNeighbors = true
@@ -30,24 +30,63 @@ var numCardsInHand = 0
 var cardNumInHand
 var neighborCard
 var isMovingNeighborCard = false
-var cardJustSelected = false
+var cardIsSelected = false
 var lastCardState
+var isMovingIntoPlay = false
 
 func _input(event):
 	match currentCardState:
-		focusedInHand, inMouse, inPlay:
+		focusedInHand, inMouse, attacking:
 			if event.is_action_pressed("leftclick"): #pick up card
-				if cardJustSelected == false:
+				if cardIsSelected == false:
+					print ("picked up card")
 					lastCardState = currentCardState #record whether the card was selected from hand or play
 					currentCardState = inMouse
 					isSettingUp = true
-					cardJustSelected = true
-					
-				
-
+					cardIsSelected = true
+			if event.is_action_released("leftclick") || event.is_action_pressed("escape"):
+				print ("released mouse")
+				if cardIsSelected == true:
+					if lastCardState == focusedInHand: #if it was previously in the hand, let it attack	
+						var enemyCards = $"../../EnemyCards"
+#						var isEnemyBeingAttacked = $"../../".isEnemyBeingAttacked
+#						for i in range(enemyCards.get_child_count()):
+						for i in enemyCards.get_children():
+#							if isEnemyBeingAttacked[e] == true:
+							print ("running a")
+#							if i.isEnemyBeingAttacked == false: #should switch this to signal?
+#							print ("running b")
+							var enemyPos = i.position
+							var enemySize = i.size
+							var mousePos = i.get_local_mouse_position() #gets mouse pos relative to enemy being attacked
+							print ("mouse pos: ",mousePos)
+							if mousePos.x > 0 && mousePos.y > 0 && mousePos.x < enemySize.x && mousePos.y < enemySize.y:
+								print ("attempting to attack card")
+								isSettingUp = true
+								isMovingIntoPlay = true
+#								targetPos = enemyPos #change pos if needed
+								currentCardState = attacking
+								
+								# DO ALL THE STUFF HERE???
+								##################
+#								i.queue_free() #destroys the enemy
+#								queue_free() #destroys the player's card
+								#animate
+								#change deck size
+								break #break just in case
+								
+						if currentCardState != attacking:
+							isSettingUp = true
+							targetPos = defaultCardPos
+							currentCardState = reorganizingHand
+							cardIsSelected = false
+#					else: #this is where the tutorial does damage
+						
+						
 enum{
+	discarded,
 	inHand,
-	inPlay,
+	attacking,
 	inMouse,
 	focusedInHand,
 	movingDrawnCardToHand,
@@ -60,8 +99,6 @@ var currentCardState = inHand
 #@onready var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
 #var cardImg = str("res://art/cards/backgrounds/",cardInfo[0],"/",Cardname,".png")
 #@onready var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png")
-
-# repeating the state engine here
 
 
 func _ready(): #called when node enters the scene tree
@@ -88,17 +125,27 @@ func _ready(): #called when node enters the scene tree
 
 func _physics_process(delta):
 	match currentCardState:
+		discarded:
+			pass
+#			print ("discarded")
+
+
 		inHand:
 			pass
-		inPlay:
-			pass
+
+
+		attacking:
+			print("attack!")
+			# do stuff
+			currentCardState = discarded
+			
 
 
 		inMouse:
 			if isSettingUp == true:
 				SetupTransition()
 			if t <= 1: 
-				position = startPos.lerp(get_global_mouse_position() - $"../../".cardSize,t) # move to target position
+				position = startPos.lerp(get_global_mouse_position() - $"../../".cardSize/2,t) # move to target position
 				rotation = startRot * (1-t) + 0*t 
 				scale = startScale * (1-t) + originalScale*t #scale to original scale
 				t += delta/float(moveToMouseTime) # set transition time with organizeTime

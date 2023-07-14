@@ -2,19 +2,17 @@ extends Node
 # Unitinfo = [Type, Power, Simple Name, Color, Special Text]
 # Eventinfo = [Type, Cost, Effect]
 
-enum {BubbleWhite, SwordWhite, BubbleWhite2, SwordWhite2}
+enum {SwordWhite, SwordRed, PencilWhite}
 
 const DATA = {
-	BubbleWhite :
-		["Enemy", 4, "Bubble", "White", ""],
 	
 	SwordWhite :
 		["Weapon", 4, "Sword", "White", ""],
 	
-	BubbleWhite2 :
-		["Enemy", 2, "Bubble", "White", ""],
+	SwordRed :
+		["Weapon", 2, "Sword", "Red", ""],
 	
-	SwordWhite2 :
-		["Weapon", 2, "Sword", "White", ""],
+	PencilWhite :
+		["Weapon", 2, "Pencil", "White", ""],
 		
 }

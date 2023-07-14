@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://cdx11c322mla3"]
+
+[ext_resource type="Texture2D" uid="uid://ij134wvjipwq" path="res://Art/Cards/Enemy/Bubble2White.png" id="1_an8kp"]
+[ext_resource type="Script" path="res://Scripts/Enemy.gd" id="1_ieyo5"]
+
+[node name="Enemy" type="MarginContainer"]
+offset_right = 250.0
+offset_bottom = 250.0
+script = ExtResource("1_ieyo5")
+
+[node name="ImageContainer" type="MarginContainer" parent="."]
+custom_minimum_size = Vector2(250, 250)
+layout_mode = 2
+theme_override_constants/margin_left = 250
+theme_override_constants/margin_top = 250
+
+[node name="CardImg" type="Sprite2D" parent="ImageContainer"]
+texture = ExtResource("1_an8kp")
+centered = false
+
+[node name="Bars" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TopGap" type="MarginContainer" parent="Bars"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
+
+[node name="MidGap" type="MarginContainer" parent="Bars"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="BottomBar" type="HBoxContainer" parent="Bars"]
+layout_mode = 2
+
+[node name="LeftGap" type="MarginContainer" parent="Bars/BottomBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="Power" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/BottomBar/Power"]
+layout_mode = 2
+
+[node name="Power" type="Label" parent="Bars/BottomBar/Power/CenterContainer"]
+layout_mode = 2
+text = "2"
+
+[node name="MidGap" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Color" type="MarginContainer" parent="Bars/BottomBar"]
+layout_mode = 2
+
+[node name="BG" type="NinePatchRect" parent="Bars/BottomBar/Color"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Bars/BottomBar/Color"]
+layout_mode = 2
+
+[node name="Color" type="Label" parent="Bars/BottomBar/Color/CenterContainer"]
+layout_mode = 2
+text = "White
+"
+
+[node name="RightGap" type="MarginContainer" parent="Bars/BottomBar"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+
+[node name="BottomGap" type="MarginContainer" parent="Bars"]
+custom_minimum_size = Vector2(0, 25)
+layout_mode = 2
