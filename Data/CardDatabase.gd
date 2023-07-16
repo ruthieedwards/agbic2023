@@ -10,7 +10,7 @@ const DATA = {
 		["Weapon", 4, "Sword", "White", ""],
 	
 	SwordRed :
-		["Weapon", 2, "Sword", "Red", ""],
+		["Weapon", 1, "Sword", "Red", ""],
 	
 	PencilWhite :
 		["Weapon", 2, "Pencil", "White", ""],

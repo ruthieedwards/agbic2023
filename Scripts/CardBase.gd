@@ -32,7 +32,14 @@ var neighborCard
 var isMovingNeighborCard = false
 var cardIsSelected = false
 var lastCardState
-var isMovingIntoPlay = false
+#var isMovingIntoPlay = false #not needed
+## CARD STATS
+var power
+var simpleName
+var colorName
+var specialText
+
+#signal attacked(attackPower,enemyPower)
 
 func _input(event):
 	match currentCardState:
@@ -50,22 +57,22 @@ func _input(event):
 					if lastCardState == focusedInHand: #if it was previously in the hand, let it attack	
 						var enemyCards = $"../../EnemyCards"
 #						var isEnemyBeingAttacked = $"../../".isEnemyBeingAttacked
-#						for i in range(enemyCards.get_child_count()):
-						for i in enemyCards.get_children():
-#							if isEnemyBeingAttacked[e] == true:
-							print ("running a")
-#							if i.isEnemyBeingAttacked == false: #should switch this to signal?
-#							print ("running b")
-							var enemyPos = i.position
-							var enemySize = i.size
-							var mousePos = i.get_local_mouse_position() #gets mouse pos relative to enemy being attacked
-							print ("mouse pos: ",mousePos)
+						for e in enemyCards.get_children():
+							var enemyPos = e.position
+							var enemySize = e.size
+							var mousePos = e.get_local_mouse_position() 
+							var enemyColor = e.colorName #gets mouse pos relative to enemy being attacked
+#							print ("mouse pos: ",mousePos)
 							if mousePos.x > 0 && mousePos.y > 0 && mousePos.x < enemySize.x && mousePos.y < enemySize.y:
 								print ("attempting to attack card")
-								isSettingUp = true
-								isMovingIntoPlay = true
+								isSettingUp = true 
+#								isMovingIntoPlay = true
 #								targetPos = enemyPos #change pos if needed
 								currentCardState = attacking
+								if enemyColor == colorName:
+									get_node("../../").attackInitiated.emit(power*2,e.power) #if the color match, weapon does double damage
+								else:
+									get_node("../../").attackInitiated.emit(power,e.power)
 								
 								# DO ALL THE STUFF HERE???
 								##################
@@ -73,6 +80,8 @@ func _input(event):
 #								queue_free() #destroys the player's card
 								#animate
 								#change deck size
+								##WIPPPP!!!!!!!!!!! 
+								
 								break #break just in case
 								
 						if currentCardState != attacking:
@@ -111,16 +120,18 @@ func _ready(): #called when node enters the scene tree
 #	$HoverFocus.scale *= cardSize/$HoverFocus.size()
 	
 	# grabbing all the card's properties
-	var power = cardInfo[1]
-	var simpleName = str(cardInfo[2])
-	var colorName = str(cardInfo[3])
-	var specialText = str(cardInfo[4])
+	power = cardInfo[1]
+	simpleName = str(cardInfo[2])
+	colorName = str(cardInfo[3])
+	specialText = str(cardInfo[4])
 	
 	# setting all the card's text
 	$Bars/TopBar/Name/CenterContainer/Name.text = simpleName
 	$Bars/TopBar/Power/CenterContainer/Power.text = str(power)
 	$Bars/BottomBar/SpecialText/CenterContainer/SpecialText.text = specialText
 	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
+	
+
 
 
 func _physics_process(delta):
@@ -137,7 +148,10 @@ func _physics_process(delta):
 		attacking:
 			print("attack!")
 			# do stuff
+			#this actually runs after the Lose Check...
 			currentCardState = discarded
+			
+			
 			
 
 
@@ -241,13 +255,8 @@ func _physics_process(delta):
 				rotation = targetRot
 				scale = originalScale
 				currentCardState = inHand
-			
-			
-			
 
 
-	
-	
 func MoveNeighborCard(cardNumber, isLeft, spreadAmount):
 	neighborCard = $"../".get_child(cardNumber)
 	if isLeft:
@@ -278,11 +287,10 @@ func SetupTransition(): #grabs the starting properties for the card
 			
 
 
-
 func _on_hover_focus_mouse_entered():
 	match currentCardState:
 		inHand, reorganizingHand:
-			print("mouse focused on: ",cardName)
+#			print("mouse focused on: ",cardName)
 			isSettingUp = true
 			targetPos = defaultCardPos
 			targetPos.y = get_viewport().size.y - (size.y)*zoomScale + (size.y*.2) #change size.y to $"../../".cardSize.y (2 nodes up) if using scaling

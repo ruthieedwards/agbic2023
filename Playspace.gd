@@ -33,6 +33,8 @@ var isDealingCard = false
 @onready var deckPosition = $Deck.position
 #var isEnemyBeingAttacked
 
+signal attackInitiated(attackPower,enemyPower)
+
 # i feel like this shouldn't be here but it is
 enum{
 	discarded,
@@ -88,12 +90,12 @@ func drawACard():
 	ovalAngleVector = Vector2(horizRadius * cos(cardAngle), - vertRadius * sin(cardAngle))
 	#newCard.startPos = $Deck.position - newCard.size/2 
 	newCard.startPos = deckPosition - cardSize/2 #  #bugfix
-	print("deck pos = ",deckPosition)
-	print("newCard.startPos = ",newCard.startPos)
+#	print("deck pos = ",deckPosition)
+#	print("newCard.startPos = ",newCard.startPos)
 	newCard.targetPos = centerCardOval + ovalAngleVector - cardSize/2 #idk why i added /2 but it works
 	newCard.defaultCardPos = newCard.targetPos #sets a default position for when un-focusing it
-	print("newCard.targetPos = ",newCard.targetPos)
-	print("newCard.defaultCardPos = ",newCard.defaultCardPos)
+#	print("newCard.targetPos = ",newCard.targetPos)
+#	print("newCard.defaultCardPos = ",newCard.defaultCardPos)
 	newCard.startRot = 0
 	newCard.targetRot = (PI/2 - cardAngle)/4 
 	newCard.scale *= cardSize/newCard.size #enable if scaling needed
