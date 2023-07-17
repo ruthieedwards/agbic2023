@@ -59,7 +59,7 @@ func _input(event):
 							var enemyPos = e.position
 							var enemySize = e.size
 							var mousePos = e.get_local_mouse_position() 
-							var enemyColor = e.colorName #gets mouse pos relative to enemy being attacked
+							var enemyColor = e.colorName 
 #							print ("mouse pos: ",mousePos)
 #							I think I want to redo this with collisions/overlaps instead of mouse pos??? bc the mouse might not overlap
 							if mousePos.x > 0 && mousePos.y > 0 && mousePos.x < enemySize.x && mousePos.y < enemySize.y:
@@ -69,6 +69,11 @@ func _input(event):
 #								e.$ImageContainer.$CardHover.visible = true
 #								isMovingIntoPlay = true
 #								targetPos = enemyPos #change pos if needed
+
+								if e.currentEnemyState == 1: # 1=faceUp 2=attacked
+									e.currentEnemyState = 2 #idk why it wanted numbers instead of names
+								
+								
 								currentCardState = attacking
 								if enemyColor == colorName:
 									get_node("../../").attackInitiated.emit(power*2,e.power) #if the color match, weapon does double damage
@@ -77,8 +82,14 @@ func _input(event):
 								
 								# DO ALL THE STUFF HERE???
 								##################
-#								i.queue_free() #destroys the enemy
+#								e.queue_free() #destroys the enemy
+								
+								print ("enemyState: ",e.currentEnemyState)
+#								e.UpdateCardVisibility()
 #								queue_free() #destroys the player's card
+								
+#								await get_tree().create_timer(.5).timeout
+#								get_node("../../").reIndexEnemies()
 								#animate
 								#change deck size
 								##WIPPPP!!!!!!!!!!! 
@@ -90,8 +101,9 @@ func _input(event):
 							targetPos = defaultCardPos
 							currentCardState = reorganizingHand
 							cardIsSelected = false
-#					else: #this is where the tutorial does damage
 						
+#					else: #this is where the tutorial does damage
+				
 						
 enum{
 	discarded,

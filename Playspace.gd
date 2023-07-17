@@ -73,8 +73,15 @@ func drawAnEnemy(enemyNum, enemyName):
 	newEnemy.position.x = enemyNum % 3 * 250 + 200
 	newEnemy.position.y = floor(enemyNum / 3) * 250 + 150
 	newEnemy.cardName = enemyHandTemp.enemyCardList[enemyNum]
+	newEnemy.cardIndex = enemyNum
 	$EnemyCards.add_child(newEnemy)
 
+func reIndexEnemies():
+	for e in $EnemyCards.get_children():
+#		print("recalllccc")
+#		print("emeyCardList size=  ",enemyHandTemp.enemyCardList.size())
+		e.CalculateGridPosition()
+		pass
 
 func drawACard():
 	

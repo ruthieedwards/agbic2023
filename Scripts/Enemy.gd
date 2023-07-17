@@ -1,4 +1,4 @@
-extends MarginContainer
+class_name Enemy extends MarginContainer
 
 var isEnemyBeingAttacked = false
 var cardName
@@ -6,10 +6,15 @@ var power
 var simpleName
 var colorName
 var specialText
+var gridPosition = Vector2(0, 0)
+var cardGridSize = Vector2(3, 3)
+var cardIndex
 
 enum{
 	faceDown,
 	faceUp,
+	attacked,
+	discarded,
 }
 
 var currentEnemyState = faceDown
@@ -38,6 +43,9 @@ func _ready():
 	await get_tree().create_timer(.5).timeout
 	$RayCast2D.enabled = true
 	
+	CalculateGridPosition()
+#	UpdateCardVisibility()
+	
 #	if $RayCast2D.is_colliding():
 #		print("collision point: ",$RayCast2D.get_collision_point())
 ##		print ($RayCast2D.get_collider())
@@ -47,25 +55,67 @@ func _ready():
 #	elif $RayCast2D.get_collider() == $"../../PlayspaceCollider": 
 ##			print("teh")
 #		$CardBack.visible = false
+	
+func CalculateGridPosition():
+	var row = cardIndex % int(cardGridSize.y)# Divide cardIndex by the number of columns to get the row
+	var column = cardIndex % int(cardGridSize.x) # Use modulo operator to get the column
+	gridPosition = Vector2(column, row)
+	print("calculated grid pos")
+	
+#func UpdateCardVisibility():
+#	pass
 
-
+func flipCardAbove():
+	var aboveIndex = cardIndex - int(cardGridSize.x)
+	print ("running flip card")
+#	var numEnemies = $"../../".enemyHandTemp.enemyCardList.size()
+#	if aboveIndex < numEnemies - 1: #offset for 0-index?
+	if aboveIndex >= 0:
+#		currentEnemyState = faceUp #get the other card and flip face up
+		print("flipping")
+		get_node("../../EnemyCards").get_child(aboveIndex).currentEnemyState = faceUp
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	if $RayCast2D.is_colliding():
-		var tempObject = $RayCast2D.get_collider()
-#		print("collision point: ",$RayCast2D.get_collision_point())
+#	if $RayCast2D.is_colliding():
+#		var tempObject = $RayCast2D.get_collider()
+##		print("collision point: ",$RayCast2D.get_collision_point())
 #		print ($RayCast2D.get_collider())
-		if tempObject.get_collision_mask_value(1):
-			print("no")
-			$CardBack.visible = true
-		elif tempObject.get_collision_mask_value(2):
-#			print("teh")
-			$CardBack.visible = false
-		else:
-			$CardBack.visible = true
+#		if tempObject is Enemy:
+#			print("no")
+#			$CardBack.visible = true
+#		elif tempObject != null:
+##			print("teh")
+#			$CardBack.visible = false
+#		else:
+#			$CardBack.visible = true
+
 #	if $RayCast2D.is_colliding():
 ##		print("collision point: ",$RayCast2D.get_collision_point())
 #		var tempObject = $RayCast2D.get_collider()
 #		if tempObject.get_collision_mask_value(2):
 #			print ("oh yeah")
+#	var collidingCard = raycast.get_collider()
+#    if collidingCard != null:
+	
+	match currentEnemyState:
+		faceDown:
+			var belowIndex = cardIndex + int(cardGridSize.x)
+			var numEnemies = $"../../".enemyHandTemp.enemyCardList.size()
+			if belowIndex > numEnemies - 1: #offset for 0-index?
+				currentEnemyState = faceUp
+			pass
+		faceUp:
+			$CardBack.visible = false
+		attacked:
+			print ("killing enemy")
+			flipCardAbove()
+			currentEnemyState = discarded
+#			UpdateCardVisibility()
+		discarded:
+#			print ("discarded enemy #",cardIndex)
+			#reindex all the enemy cards
+#			queue_free()
+			visible = false
+			
+			
