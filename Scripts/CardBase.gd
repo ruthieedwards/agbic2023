@@ -23,7 +23,7 @@ var isTweening = false
 var isSettingUp = true
 var startScale = Vector2(0,0)
 var zoomScale = 1.1
-@onready var originalScale = scale
+@onready var originalScale = scale #change scale if needed here + in ready function
 var defaultCardPos = Vector2(0,0)
 var isReorganizingNeighbors = true
 var numCardsInHand = 0
@@ -39,7 +39,6 @@ var simpleName
 var colorName
 var specialText
 
-#signal attacked(attackPower,enemyPower)
 
 func _input(event):
 	match currentCardState:
@@ -56,16 +55,18 @@ func _input(event):
 				if cardIsSelected == true:
 					if lastCardState == focusedInHand: #if it was previously in the hand, let it attack	
 						var enemyCards = $"../../EnemyCards"
-#						var isEnemyBeingAttacked = $"../../".isEnemyBeingAttacked
 						for e in enemyCards.get_children():
 							var enemyPos = e.position
 							var enemySize = e.size
 							var mousePos = e.get_local_mouse_position() 
 							var enemyColor = e.colorName #gets mouse pos relative to enemy being attacked
 #							print ("mouse pos: ",mousePos)
+#							I think I want to redo this with collisions/overlaps instead of mouse pos??? bc the mouse might not overlap
 							if mousePos.x > 0 && mousePos.y > 0 && mousePos.x < enemySize.x && mousePos.y < enemySize.y:
 								print ("attempting to attack card")
 								isSettingUp = true 
+								e.get_node("ImageContainer/CardHover").visible = true
+#								e.$ImageContainer.$CardHover.visible = true
 #								isMovingIntoPlay = true
 #								targetPos = enemyPos #change pos if needed
 								currentCardState = attacking
@@ -115,7 +116,7 @@ func _ready(): #called when node enters the scene tree
 	var cardInfo = cardDatabase.DATA[cardDatabase.get(cardName)]
 	var cardImg = str("res://Art/Cards/",cardInfo[0],"/",cardName,".png") #loads image
 	$CardImg.texture = load(cardImg) #sets image as texture
-#	$Card.scale *= cardSize/$Card.texture.get_size() # scale card if needed
+#	scale *= cardSize/$CardImg.texture.get_size()*.75 # scale card if needed
 #	$Border.scale *= cardSize/$Border.texture.get_size()
 #	$HoverFocus.scale *= cardSize/$HoverFocus.size()
 	

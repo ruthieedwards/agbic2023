@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cowggk63rr3xm"]
+[gd_scene load_steps=9 format=3 uid="uid://cowggk63rr3xm"]
 
 [ext_resource type="Script" path="res://Playspace.gd" id="1_snowq"]
 [ext_resource type="Texture2D" uid="uid://dngud0is0bgn4" path="res://Art/Backgrounds/winxpBG.jpg" id="2_a48r0"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://b6mlbwbewr42c" path="res://Art/Cards/backgrounds/bg_deck_empty.png" id="4_qfn0d"]
 [ext_resource type="Script" path="res://Scenes/DeckDraw.gd" id="5_ieepd"]
 [ext_resource type="Script" path="res://Scenes/Health.gd" id="6_ysenx"]
+[ext_resource type="Script" path="res://Scenes/Energy.gd" id="7_epw5e"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_knshx"]
+size = Vector2(54, 4.2)
 
 [node name="Playspace" type="Node2D"]
 script = ExtResource("1_snowq")
@@ -19,7 +23,8 @@ visible = false
 texture = ExtResource("2_a48r0")
 
 [node name="Deck" type="Node2D" parent="."]
-position = Vector2(1640, 700)
+position = Vector2(13, 1277)
+scale = Vector2(0.5, 0.5)
 metadata/_edit_group_ = true
 
 [node name="DeckDraw" type="TextureButton" parent="Deck"]
@@ -32,10 +37,10 @@ texture_disabled = ExtResource("4_qfn0d")
 script = ExtResource("5_ieepd")
 
 [node name="Health" type="MarginContainer" parent="."]
-offset_left = 40.0
-offset_top = 962.0
-offset_right = 197.0
-offset_bottom = 1017.0
+offset_left = 45.0
+offset_top = 53.0
+offset_right = 202.0
+offset_bottom = 117.0
 script = ExtResource("6_ysenx")
 metadata/_edit_group_ = true
 
@@ -47,7 +52,7 @@ custom_minimum_size = Vector2(100, 20)
 layout_mode = 2
 max_value = 20.0
 step = 1.0
-value = 10.0
+value = 15.0
 show_percentage = false
 
 [node name="MidGap" type="MarginContainer" parent="Health/Bars"]
@@ -58,5 +63,43 @@ size_flags_vertical = 3
 [node name="HealthText" type="Label" parent="Health/Bars"]
 layout_mode = 2
 text = "Health: 0"
+
+[node name="Energy" type="MarginContainer" parent="."]
+offset_left = 230.0
+offset_top = 51.0
+offset_right = 387.0
+offset_bottom = 115.0
+script = ExtResource("7_epw5e")
+metadata/_edit_group_ = true
+
+[node name="Bars" type="VBoxContainer" parent="Energy"]
+layout_mode = 2
+
+[node name="EnergyBar" type="ProgressBar" parent="Energy/Bars"]
+custom_minimum_size = Vector2(100, 20)
+layout_mode = 2
+max_value = 3.0
+step = 1.0
+value = 3.0
+show_percentage = false
+
+[node name="MidGap" type="MarginContainer" parent="Energy/Bars"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="EnergyText" type="Label" parent="Energy/Bars"]
+layout_mode = 2
+text = "Energy: 3"
+
+[node name="PlayspaceCollider" type="Area2D" parent="."]
+position = Vector2(540, 1400)
+collision_layer = 2
+collision_mask = 2
+
+[node name="PlayspaceColliderShape" type="CollisionShape2D" parent="PlayspaceCollider"]
+position = Vector2(1, 0)
+scale = Vector2(20, 20)
+shape = SubResource("RectangleShape2D_knshx")
 
 [connection signal="attackInitiated" from="." to="Health" method="_on_attack_initiated"]

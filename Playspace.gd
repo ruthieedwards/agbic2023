@@ -19,7 +19,7 @@ var randomCardSelected = []
 #ycoords = radius2 * sin of the angle
 
 @onready var viewportSize = Vector2(get_viewport().size)
-@onready var centerCardOval = viewportSize * Vector2(0.5, 1.25)
+@onready var centerCardOval = viewportSize * Vector2(0.5, 1.32)
 @onready var horizRadius = get_viewport().size.x * 0.45
 @onready var vertRadius = get_viewport().size.y * 0.4
 var startingAngle = deg_to_rad(90) - 0.5 # pi/2
@@ -49,6 +49,7 @@ enum{
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	await get_tree().create_timer(.5).timeout
 	generateEnemyGrid()
 	#deal 3 cards
 	await get_tree().create_timer(.5).timeout
@@ -60,21 +61,17 @@ func _ready():
 
 func generateEnemyGrid():
 	for e in enemyHandTemp.enemyCardList.size():
-		print("emeyCardList size=  ",enemyHandTemp.enemyCardList.size())
+#		print("emeyCardList size=  ",enemyHandTemp.enemyCardList.size())
 		drawAnEnemy(e, enemyHandTemp.enemyCardList[e-1])
 		pass
-	
-	for e in $EnemyCards.get_children():
-		e.visible = true
-		#position them somewhere
-#		e.scale *= .5 #if need to scale
+
 
 func drawAnEnemy(enemyNum, enemyName):
 	var newEnemy = enemy.instantiate()
 #	enemyNum -= 1
 #	newEnemy.position = get_viewport().size*.05 + Vector2(200,0) #change this 
-	newEnemy.position.x = enemyNum % 4 * 250 + 200
-	newEnemy.position.y = floor(enemyNum / 4) * 250 + 20
+	newEnemy.position.x = enemyNum % 3 * 250 + 200
+	newEnemy.position.y = floor(enemyNum / 3) * 250 + 150
 	newEnemy.cardName = enemyHandTemp.enemyCardList[enemyNum]
 	$EnemyCards.add_child(newEnemy)
 
@@ -97,6 +94,7 @@ func drawACard():
 #	print("newCard.targetPos = ",newCard.targetPos)
 #	print("newCard.defaultCardPos = ",newCard.defaultCardPos)
 	newCard.startRot = 0
+	newCard.rotation = -2
 	newCard.targetRot = (PI/2 - cardAngle)/4 
 	newCard.scale *= cardSize/newCard.size #enable if scaling needed
 	newCard.currentCardState = movingDrawnCardToHand

@@ -2,7 +2,7 @@ extends Node
 # Unitinfo = [Type, Power, Simple Name, Color, Special Text]
 # Eventinfo = [Type, Cost, Effect]
 
-enum {Bubble1White, Bubble2White, Bubble1Red}
+enum {Bubble1White, Bubble2White, Bubble1Red, BubbleRescue}
 
 const DATA = {
 	
@@ -15,4 +15,6 @@ const DATA = {
 	Bubble1Red :
 		["Enemy", 1, "Bubble", "Red", ""],
 		
+	BubbleRescue :
+		["Enemy", 0, "Help me!", "Neutral", "Rescue the townsperson"]
 }
