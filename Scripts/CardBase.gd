@@ -50,6 +50,9 @@ func _input(event):
 					currentCardState = inMouse
 					isSettingUp = true
 					cardIsSelected = true
+					# PLAY AUDIO
+					var randSound = randi() % $"../../AudioManager/CardSounds/Pickups/".get_child_count()
+					$"../../AudioManager/CardSounds/Pickups/".get_child(randSound).play()
 			if event.is_action_released("leftclick") || event.is_action_pressed("escape"):
 				print ("released mouse")
 				if cardIsSelected == true:
@@ -66,12 +69,14 @@ func _input(event):
 								print ("attempting to attack card")
 								isSettingUp = true 
 								e.get_node("ImageContainer/CardHover").visible = true
+								var randSound = randi() % $"../../AudioManager/CardSounds/Plays/".get_child_count()
+								$"../../AudioManager/CardSounds/Plays/".get_child(randSound).play()
+								
 #								e.$ImageContainer.$CardHover.visible = true
 #								isMovingIntoPlay = true
 #								targetPos = enemyPos #change pos if needed
-
-								if e.currentEnemyState == 1: # 1=faceUp 2=attacked
-									e.currentEnemyState = 2 #idk why it wanted numbers instead of names
+								
+								
 								
 								
 								currentCardState = attacking
@@ -83,6 +88,11 @@ func _input(event):
 								# DO ALL THE STUFF HERE???
 								##################
 #								e.queue_free() #destroys the enemy
+								$"../../AudioManager/CardSounds/Poof".play()
+								await get_tree().create_timer(.5).timeout
+								
+								if e.currentEnemyState == 1: # 1=faceUp 2=attacked
+									e.currentEnemyState = 2 #idk why it wanted numbers instead of names
 								
 								print ("enemyState: ",e.currentEnemyState)
 #								e.UpdateCardVisibility()

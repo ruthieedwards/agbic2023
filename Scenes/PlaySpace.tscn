@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cowggk63rr3xm"]
+[gd_scene load_steps=21 format=3 uid="uid://cowggk63rr3xm"]
 
 [ext_resource type="Script" path="res://Playspace.gd" id="1_snowq"]
 [ext_resource type="Texture2D" uid="uid://dngud0is0bgn4" path="res://Art/Backgrounds/winxpBG.jpg" id="2_a48r0"]
@@ -7,6 +7,18 @@
 [ext_resource type="Script" path="res://Scenes/DeckDraw.gd" id="5_ieepd"]
 [ext_resource type="Script" path="res://Scenes/Health.gd" id="6_ysenx"]
 [ext_resource type="Script" path="res://Scenes/Energy.gd" id="7_epw5e"]
+[ext_resource type="Script" path="res://Scenes/AudioManager.gd" id="8_3hk2j"]
+[ext_resource type="AudioStream" uid="uid://bq06iku748bxn" path="res://Audio/Music/background_music.wav" id="8_mnj5a"]
+[ext_resource type="AudioStream" uid="uid://hwulnwwuus0m" path="res://Audio/Card_Deals/card_deal_1.wav" id="9_sggts"]
+[ext_resource type="AudioStream" uid="uid://c5ynxxkrfltdg" path="res://Audio/Card_Deals/card_deal_2.wav" id="10_67ulp"]
+[ext_resource type="AudioStream" uid="uid://d2dqwcbf0axh5" path="res://Audio/Card_Deals/card_deal_3.wav" id="11_twsrg"]
+[ext_resource type="AudioStream" uid="uid://ch1c6aakcu18n" path="res://Audio/Card_Deals/card_deal_4.wav" id="12_jw4by"]
+[ext_resource type="AudioStream" uid="uid://cgh45g40w3s5y" path="res://Audio/Card_Deals/card_pickup_1.wav" id="14_0uoty"]
+[ext_resource type="AudioStream" uid="uid://bj4bk55v6o4sl" path="res://Audio/Card_Deals/card_pickup_2.wav" id="15_5dhxk"]
+[ext_resource type="AudioStream" uid="uid://c7guutgujtr35" path="res://Audio/Card_Deals/card_play_1.wav" id="16_4b2oy"]
+[ext_resource type="AudioStream" uid="uid://dym8ckqirlybx" path="res://Audio/Card_Deals/card_play_2.wav" id="17_6naro"]
+[ext_resource type="AudioStream" uid="uid://b5sw1tt0vup6n" path="res://Audio/Card_Deals/card_poof.wav" id="18_gw4k3"]
+[ext_resource type="AudioStream" uid="uid://dn03pq2y3hn8d" path="res://Audio/Card_Deals/card_shuffle.wav" id="19_eyn6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_knshx"]
 size = Vector2(1079, 19.1)
@@ -105,4 +117,50 @@ position = Vector2(0.5, -7.44995)
 shape = SubResource("RectangleShape2D_knshx")
 disabled = true
 
+[node name="AudioManager" type="AudioStreamPlayer2D" parent="."]
+script = ExtResource("8_3hk2j")
+
+[node name="BGMusic" type="AudioStreamPlayer" parent="AudioManager"]
+stream = ExtResource("8_mnj5a")
+autoplay = true
+
+[node name="CardSounds" type="Node" parent="AudioManager"]
+
+[node name="Deals" type="Node" parent="AudioManager/CardSounds"]
+
+[node name="deal1" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Deals"]
+stream = ExtResource("9_sggts")
+
+[node name="deal2" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Deals"]
+stream = ExtResource("10_67ulp")
+
+[node name="deal3" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Deals"]
+stream = ExtResource("11_twsrg")
+
+[node name="deal4" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Deals"]
+stream = ExtResource("12_jw4by")
+
+[node name="Pickups" type="Node" parent="AudioManager/CardSounds"]
+
+[node name="pickup1" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Pickups"]
+stream = ExtResource("14_0uoty")
+
+[node name="pickup2" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Pickups"]
+stream = ExtResource("15_5dhxk")
+
+[node name="Plays" type="Node" parent="AudioManager/CardSounds"]
+
+[node name="play1" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Plays"]
+stream = ExtResource("16_4b2oy")
+
+[node name="play2" type="AudioStreamPlayer" parent="AudioManager/CardSounds/Plays"]
+stream = ExtResource("17_6naro")
+
+[node name="Poof" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds"]
+stream = ExtResource("18_gw4k3")
+
+[node name="Shuffle" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds"]
+stream = ExtResource("19_eyn6n")
+
 [connection signal="attackInitiated" from="." to="Health" method="_on_attack_initiated"]
+[connection signal="dealtCard" from="." to="AudioManager" method="_on_playspace_dealt_card"]

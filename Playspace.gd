@@ -14,10 +14,6 @@ const cardBase = preload("res://Scenes/CardBase.tscn")
 var randomCardSelected = []
 @onready var deckSize = playerHandTemp.cardList.size()
 
-#formula for drawing an oval
-#xcoords = radius1 * cos of the angle
-#ycoords = radius2 * sin of the angle
-
 @onready var viewportSize = Vector2(get_viewport().size)
 @onready var centerCardOval = viewportSize * Vector2(0.5, 1.32)
 @onready var horizRadius = get_viewport().size.x * 0.45
@@ -33,6 +29,7 @@ var isDealingCard = false
 @onready var deckPosition = $Deck.position
 #var isEnemyBeingAttacked
 
+signal dealtCard
 signal attackInitiated(attackPower,enemyPower)
 
 # i feel like this shouldn't be here but it is
@@ -50,6 +47,8 @@ enum{
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	await get_tree().create_timer(.5).timeout
+	$AudioManager/CardSounds/Shuffle.play()
+	await get_tree().create_timer(1.5).timeout
 	generateEnemyGrid()
 	#deal 3 cards
 	await get_tree().create_timer(.5).timeout
@@ -89,6 +88,8 @@ func drawACard():
 	var newCard = cardBase.instantiate()
 	randomCardSelected = randi() % deckSize
 	newCard.cardName = playerHandTemp.cardList[randomCardSelected]
+	#play sound
+	dealtCard.emit()
 	
 	#place the card along an oval
 	ovalAngleVector = Vector2(horizRadius * cos(cardAngle), - vertRadius * sin(cardAngle))
