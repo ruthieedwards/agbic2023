@@ -1,0 +1,10 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://d0oissken6ioo"]
+
+[ext_resource type="FontFile" uid="uid://bipxkn00f0hac" path="res://Fonts/Modak-Regular.ttf" id="1_47qhu"]
+
+[resource]
+font = ExtResource("1_47qhu")
+font_size = 80
+font_color = Color(1, 0.807843, 0, 1)
+outline_size = 20
+outline_color = Color(0.25098, 0.105882, 0.262745, 1)

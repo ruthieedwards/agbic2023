@@ -1,0 +1,102 @@
+[gd_scene load_steps=7 format=3 uid="uid://qjwd5l47mb5g"]
+
+[ext_resource type="Texture2D" uid="uid://b3if127g1iflf" path="res://Art/Title Screen/squnk.png" id="1_4bgto"]
+[ext_resource type="Script" path="res://Scenes/SceneChanger.gd" id="1_h66gx"]
+[ext_resource type="LabelSettings" uid="uid://c6agsas3euml2" path="res://Fonts/TitleStyle.tres" id="2_312du"]
+[ext_resource type="Texture2D" uid="uid://dlvh3h6nga70d" path="res://Art/Cards/backgrounds/EnemyBack.png" id="3_jo5t6"]
+[ext_resource type="LabelSettings" uid="uid://d0oissken6ioo" path="res://Fonts/ButtonStyle.tres" id="4_ricxg"]
+[ext_resource type="AudioStream" uid="uid://r7u0s1uwx20c" path="res://Audio/Music/title_music.wav" id="6_wiy02"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_h66gx")
+
+[node name="BG Color" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.933333, 0.643137, 0.870588, 1)
+
+[node name="Overall Padding" type="MarginContainer" parent="."]
+layout_mode = 2
+offset_top = 4.0
+offset_right = 1080.0
+offset_bottom = 4.0
+theme_override_constants/margin_left = 25
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 25
+theme_override_constants/margin_bottom = 25
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Overall Padding"]
+layout_mode = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="Overall Padding/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="TextureRect" type="TextureRect" parent="Overall Padding/VBoxContainer/CenterContainer"]
+custom_minimum_size = Vector2(980, 0)
+layout_mode = 2
+texture = ExtResource("1_4bgto")
+expand_mode = 5
+
+[node name="MiddlePadding" type="MarginContainer" parent="Overall Padding/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+
+[node name="Title" type="MarginContainer" parent="Overall Padding/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleText" type="Label" parent="Overall Padding/VBoxContainer/Title"]
+layout_mode = 2
+text = "Lil Squnk"
+label_settings = ExtResource("2_312du")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MiddlePadding2" type="MarginContainer" parent="Overall Padding/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = 200
+
+[node name="ButtonContainer" type="CenterContainer" parent="Overall Padding/VBoxContainer"]
+layout_mode = 2
+
+[node name="PlayButton" type="TextureButton" parent="Overall Padding/VBoxContainer/ButtonContainer"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+texture_normal = ExtResource("3_jo5t6")
+ignore_texture_size = true
+stretch_mode = 1
+
+[node name="PlayButtonText" type="Label" parent="Overall Padding/VBoxContainer/ButtonContainer/PlayButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -62.0
+offset_right = 190.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play
+"
+label_settings = ExtResource("4_ricxg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_wiy02")
+autoplay = true
+
+[connection signal="button_up" from="Overall Padding/VBoxContainer/ButtonContainer/PlayButton" to="." method="GoToGame"]
