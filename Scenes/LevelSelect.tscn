@@ -1,0 +1,116 @@
+[gd_scene load_steps=5 format=3 uid="uid://drk6d6wg4w5q3"]
+
+[ext_resource type="LabelSettings" uid="uid://d0oissken6ioo" path="res://Fonts/ButtonStyle.tres" id="1_03cp4"]
+[ext_resource type="Texture2D" uid="uid://dlvh3h6nga70d" path="res://Art/Cards/backgrounds/EnemyBack.png" id="2_bqcnb"]
+[ext_resource type="Texture2D" uid="uid://cluyh8ja33tct" path="res://Art/LevelSelect/path.png" id="3_ls78t"]
+[ext_resource type="PackedScene" uid="uid://b2vs5yrq76744" path="res://Scenes/LevelButton.tscn" id="4_g4hp1"]
+
+[node name="LevelSelect" type="Node2D"]
+
+[node name="New UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="BG Color" type="ColorRect" parent="New UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1040.0
+offset_bottom = 1880.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.933333, 0.643137, 0.870588, 1)
+
+[node name="PlayButton" type="TextureButton" parent="New UI"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+offset_left = 290.0
+offset_top = 1720.0
+offset_right = 790.0
+offset_bottom = 1870.0
+texture_normal = ExtResource("2_bqcnb")
+ignore_texture_size = true
+stretch_mode = 1
+
+[node name="PlayButtonText" type="Label" parent="New UI/PlayButton"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -62.0
+offset_right = 190.0
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Play
+"
+label_settings = ExtResource("1_03cp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="path" type="TextureRect" parent="New UI"]
+custom_minimum_size = Vector2(1000, 1200)
+layout_mode = 0
+offset_left = 40.0
+offset_top = 331.0
+offset_right = 1040.0
+offset_bottom = 1531.0
+texture = ExtResource("3_ls78t")
+stretch_mode = 5
+
+[node name="LevelButtons" type="Node" parent="New UI"]
+
+[node name="LevelButton1" parent="New UI/LevelButtons" instance=ExtResource("4_g4hp1")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 287.0
+offset_top = 1452.0
+offset_right = 378.0
+offset_bottom = 1543.0
+levelNumber = 1
+
+[node name="LevelButton2" parent="New UI/LevelButtons" instance=ExtResource("4_g4hp1")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 734.0
+offset_top = 1197.0
+offset_right = 825.0
+offset_bottom = 1288.0
+levelNumber = 2
+
+[node name="LevelButton3" parent="New UI/LevelButtons" instance=ExtResource("4_g4hp1")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 458.0
+offset_top = 922.0
+offset_right = 549.0
+offset_bottom = 1013.0
+levelNumber = 3
+
+[node name="LevelText" type="Label" parent="New UI"]
+layout_mode = 2
+offset_left = 25.0
+offset_top = 104.0
+offset_right = 1055.0
+offset_bottom = 228.0
+text = "Level 1"
+label_settings = ExtResource("1_03cp4")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="New UI/PlayButton" to="New UI/LevelButtons/LevelButton1" method="GoToGame"]

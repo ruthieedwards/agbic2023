@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2vs5yrq76744"]
+
+[ext_resource type="Texture2D" uid="uid://yahv87gv2l8x" path="res://Art/LevelSelect/Buttons/Enabled.png" id="1_vrgs8"]
+[ext_resource type="Texture2D" uid="uid://gb8xy0pxifyn" path="res://Art/LevelSelect/Buttons/Hover.png" id="2_20ibg"]
+[ext_resource type="Texture2D" uid="uid://w1gy8882pdt8" path="res://Art/LevelSelect/Buttons/Disabled.png" id="3_vyufp"]
+[ext_resource type="Script" path="res://Scenes/SceneChanger.gd" id="4_jkf1q"]
+
+[node name="LevelButton" type="TextureButton"]
+anchors_preset = -1
+anchor_left = 0.271296
+anchor_top = 0.797396
+anchor_right = 0.355556
+anchor_bottom = 0.844792
+texture_normal = ExtResource("1_vrgs8")
+texture_hover = ExtResource("2_20ibg")
+texture_disabled = ExtResource("3_vyufp")
+stretch_mode = 4
+script = ExtResource("4_jkf1q")
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="." to="." method="ChangeLevel"]

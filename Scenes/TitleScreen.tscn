@@ -42,7 +42,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="TextureRect" type="TextureRect" parent="Overall Padding/VBoxContainer/CenterContainer"]
+[node name="Squnk" type="TextureRect" parent="Overall Padding/VBoxContainer/CenterContainer"]
 custom_minimum_size = Vector2(980, 0)
 layout_mode = 2
 texture = ExtResource("1_4bgto")
@@ -99,4 +99,4 @@ vertical_alignment = 1
 stream = ExtResource("6_wiy02")
 autoplay = true
 
-[connection signal="button_up" from="Overall Padding/VBoxContainer/ButtonContainer/PlayButton" to="." method="GoToGame"]
+[connection signal="button_up" from="Overall Padding/VBoxContainer/ButtonContainer/PlayButton" to="." method="GoToLevelSelect"]
