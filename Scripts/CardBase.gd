@@ -37,6 +37,7 @@ var lastCardState
 var power
 var simpleName
 var colorName
+var energyNeeded
 var specialText
 
 
@@ -146,13 +147,15 @@ func _ready(): #called when node enters the scene tree
 	power = cardInfo[1]
 	simpleName = str(cardInfo[2])
 	colorName = str(cardInfo[3])
-	specialText = str(cardInfo[4])
+	energyNeeded = str(cardInfo[4])
+	specialText = str(cardInfo[5])
 	
 	# setting all the card's text
-	$Bars/TopBar/Name/CenterContainer/Name.text = simpleName
-	$Bars/TopBar/Power/CenterContainer/Power.text = str(power)
+#	$Bars/TopBar/Name/CenterContainer/Name.text = simpleName
+	$Bars/TopBar/Energy/CenterContainer/EnergyText.text = str(energyNeeded)
+	$Bars/Power/CenterContainer/Power.text = str(power)
 	$Bars/BottomBar/SpecialText/CenterContainer/SpecialText.text = specialText
-	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
+#	$Bars/BottomBar/Color/CenterContainer/Color.text = colorName
 	
 
 

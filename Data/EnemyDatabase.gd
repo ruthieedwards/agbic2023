@@ -16,5 +16,5 @@ const DATA = {
 		["Enemy", 1, "Bubble", "Red", ""],
 		
 	BubbleRescue :
-		["Enemy", 0, "Help me!", "Neutral", "Rescue the townsperson"]
+		["Rescue", 1, "Help me!", "Neutral", "Rescue the townsperson"]
 }

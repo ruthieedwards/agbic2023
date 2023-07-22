@@ -1,0 +1,15 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://cchp3ilwfpn71"]
+
+[ext_resource type="Texture2D" uid="uid://cqhs461ch24q" path="res://Art/UI/button_hover.png" id="1_cmhxw"]
+
+[resource]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource("1_cmhxw")
+texture_margin_left = 40.0
+texture_margin_top = 40.0
+texture_margin_right = 48.0
+texture_margin_bottom = 64.0
+region_rect = Rect2(0, 0, 192, 216)

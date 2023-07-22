@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://ytm6hfuwir76"]
+
+[ext_resource type="FontFile" uid="uid://bipxkn00f0hac" path="res://Fonts/Modak-Regular.ttf" id="1_vly43"]
+
+[resource]
+line_spacing = 0.0
+font = ExtResource("1_vly43")
+font_size = 40
+font_color = Color(0.258824, 0.113725, 0.27451, 1)
