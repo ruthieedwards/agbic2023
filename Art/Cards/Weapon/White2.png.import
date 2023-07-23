@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bmfkypuytxwy0"
-path="res://.godot/imported/BubbleRescue.png-8b97bed29e36ec4b841b7ca02f79e1c3.ctex"
+uid="uid://cbkqu7663ob1h"
+path="res://.godot/imported/White2.png-40426afca536d50050e46455931308a1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Cards/Rescue/BubbleRescue.png"
-dest_files=["res://.godot/imported/BubbleRescue.png-8b97bed29e36ec4b841b7ca02f79e1c3.ctex"]
+source_file="res://Art/Cards/Weapon/White2.png"
+dest_files=["res://.godot/imported/White2.png-40426afca536d50050e46455931308a1.ctex"]
 
 [params]
 

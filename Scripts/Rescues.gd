@@ -27,3 +27,16 @@ func _process(delta):
 #		print("woopa")
 #		pass
 #
+
+
+func _on_attack_initiated(attackPower, enemyPower, isRescue):
+	if isRescue == true:
+		currentRescues += 1
+		$Bars/RescuesText.text = str("Remaining Townspeople: ", maxRescues - currentRescues)
+		$Bars/RescuesBar.value = maxRescues - currentRescues
+		print ("connected to rescues script")
+	
+		if maxRescues - currentRescues == 0:
+			print ("you win!")
+	else:
+		pass

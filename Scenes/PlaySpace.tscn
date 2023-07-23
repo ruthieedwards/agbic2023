@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cowggk63rr3xm"]
+[gd_scene load_steps=24 format=3 uid="uid://cowggk63rr3xm"]
 
 [ext_resource type="Script" path="res://Playspace.gd" id="1_snowq"]
 [ext_resource type="Texture2D" uid="uid://dngud0is0bgn4" path="res://Art/Backgrounds/winxpBG.jpg" id="2_a48r0"]
@@ -20,6 +20,9 @@
 [ext_resource type="AudioStream" uid="uid://dym8ckqirlybx" path="res://Audio/Card_Deals/card_play_2.wav" id="17_6naro"]
 [ext_resource type="AudioStream" uid="uid://b5sw1tt0vup6n" path="res://Audio/Card_Deals/card_poof.wav" id="18_gw4k3"]
 [ext_resource type="AudioStream" uid="uid://dn03pq2y3hn8d" path="res://Audio/Card_Deals/card_shuffle.wav" id="19_eyn6n"]
+[ext_resource type="AudioStream" uid="uid://xsn8cb3qsodk" path="res://Audio/Townspeople/townspeople_aha.wav" id="21_ib8y0"]
+[ext_resource type="AudioStream" uid="uid://cusqe1prqfby3" path="res://Audio/Townspeople/townspeople_woo.wav" id="22_oimmq"]
+[ext_resource type="AudioStream" uid="uid://bn0e0csx05557" path="res://Audio/Townspeople/townspeople_yay.wav" id="23_1m6rx"]
 
 [node name="Playspace" type="Node2D"]
 script = ExtResource("1_snowq")
@@ -174,5 +177,17 @@ stream = ExtResource("18_gw4k3")
 [node name="Shuffle" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds"]
 stream = ExtResource("19_eyn6n")
 
+[node name="Rescues" type="Node" parent="AudioManager/CardSounds"]
+
+[node name="rescue1" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds/Rescues"]
+stream = ExtResource("21_ib8y0")
+
+[node name="rescue2" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds/Rescues"]
+stream = ExtResource("22_oimmq")
+
+[node name="rescue3" type="AudioStreamPlayer2D" parent="AudioManager/CardSounds/Rescues"]
+stream = ExtResource("23_1m6rx")
+
 [connection signal="attackInitiated" from="." to="Health" method="_on_attack_initiated"]
+[connection signal="attackInitiated" from="." to="Rescues" method="_on_attack_initiated"]
 [connection signal="dealtCard" from="." to="AudioManager" method="_on_playspace_dealt_card"]

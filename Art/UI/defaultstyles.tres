@@ -1,40 +1,10 @@
-[gd_resource type="Theme" load_steps=8 format=3 uid="uid://1pfxcboa7621"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://1pfxcboa7621"]
 
 [ext_resource type="StyleBox" uid="uid://cchp3ilwfpn71" path="res://Art/UI/button_hover.tres" id="1_bo1bp"]
 [ext_resource type="StyleBox" uid="uid://dqdbyc7ejan5d" path="res://Art/UI/button_disabled.tres" id="1_yaaqh"]
 [ext_resource type="StyleBox" uid="uid://jhc44rcumf04" path="res://Art/UI/button_default.tres" id="2_s6ttv"]
+[ext_resource type="StyleBox" uid="uid://cb685sqv8umpu" path="res://Art/UI/button_down.tres" id="3_84cxn"]
 [ext_resource type="FontFile" uid="uid://bipxkn00f0hac" path="res://Fonts/Modak-Regular.ttf" id="3_ow7ht"]
-[ext_resource type="Texture2D" uid="uid://ch412qnuvquan" path="res://Art/UI/button_down.png" id="5_kqnm0"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxp5m"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7qlal"]
-content_margin_bottom = 47.0
-texture = ExtResource("5_kqnm0")
-texture_margin_left = 40.0
-texture_margin_top = 56.0
-texture_margin_right = 40.0
-texture_margin_bottom = 56.0
-region_rect = Rect2(0, 0, 192, 208)
 
 [resource]
 default_font = ExtResource("3_ow7ht")
@@ -57,7 +27,7 @@ Button/constants/outline_size = 0
 Button/font_sizes/font_size = 80
 Button/fonts/font = ExtResource("3_ow7ht")
 Button/styles/disabled = ExtResource("1_yaaqh")
-Button/styles/focus = SubResource("StyleBoxFlat_vxp5m")
+Button/styles/focus = ExtResource("3_84cxn")
 Button/styles/hover = ExtResource("1_bo1bp")
 Button/styles/normal = ExtResource("2_s6ttv")
-Button/styles/pressed = SubResource("StyleBoxTexture_7qlal")
+Button/styles/pressed = ExtResource("3_84cxn")

@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://drk6d6wg4w5q3"]
+[gd_scene load_steps=7 format=3 uid="uid://drk6d6wg4w5q3"]
 
 [ext_resource type="LabelSettings" uid="uid://d0oissken6ioo" path="res://Fonts/ButtonStyle.tres" id="1_03cp4"]
 [ext_resource type="Texture2D" uid="uid://cluyh8ja33tct" path="res://Art/LevelSelect/path.png" id="3_ls78t"]
 [ext_resource type="PackedScene" uid="uid://b2vs5yrq76744" path="res://Scenes/LevelButton.tscn" id="4_g4hp1"]
 [ext_resource type="Theme" uid="uid://1pfxcboa7621" path="res://Art/UI/defaultstyles.tres" id="5_3m3ok"]
+[ext_resource type="AudioStream" uid="uid://dqsup3jloirtt" path="res://Audio/Music/overworld_music.wav" id="5_fus67"]
 
 [sub_resource type="ButtonGroup" id="ButtonGroup_58eul"]
 
@@ -142,5 +143,10 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("5_3m3ok")
 text = "Play"
+
+[node name="BGMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_fus67")
+volume_db = 6.588
+autoplay = true
 
 [connection signal="pressed" from="PlayButton" to="New UI/LevelButtons/LevelButton1" method="GoToGame"]

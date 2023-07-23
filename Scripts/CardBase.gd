@@ -64,39 +64,42 @@ func _input(event):
 							var enemySize = e.size
 							var mousePos = e.get_local_mouse_position() 
 							var enemyColor = e.colorName 
+							var enemyType = e.cardType
 #							print ("mouse pos: ",mousePos)
 #							I think I want to redo this with collisions/overlaps instead of mouse pos??? bc the mouse might not overlap
 							if mousePos.x > 0 && mousePos.y > 0 && mousePos.x < enemySize.x && mousePos.y < enemySize.y:
 								print ("attempting to attack card")
 								isSettingUp = true 
 								e.get_node("ImageContainer/CardHover").visible = true
+								#play a random card sound
 								var randSound = randi() % $"../../AudioManager/CardSounds/Plays/".get_child_count()
 								$"../../AudioManager/CardSounds/Plays/".get_child(randSound).play()
 								
-#								e.$ImageContainer.$CardHover.visible = true
 #								isMovingIntoPlay = true
 #								targetPos = enemyPos #change pos if needed
 								
-								
-								
-								
 								currentCardState = attacking
-								if enemyColor == colorName:
-									get_node("../../").attackInitiated.emit(power*2,e.power) #if the color match, weapon does double damage
+								
+								if enemyType == "Rescue":
+									print ("initiating rescue")
+									$"../../AudioManager/CardSounds/Rescues/".get_child(randSound).play() #play a random townspeople sound
+									e.currentEnemyState = 2
+									get_node("../../").attackInitiated.emit(power,e.power,true)
+									
 								else:
-									get_node("../../").attackInitiated.emit(power,e.power)
-								
-								# DO ALL THE STUFF HERE???
-								##################
-#								e.queue_free() #destroys the enemy
-								$"../../AudioManager/CardSounds/Poof".play()
-								await get_tree().create_timer(.5).timeout
-								
-								if e.currentEnemyState == 1: # 1=faceUp 2=attacked
-									e.currentEnemyState = 2 #idk why it wanted numbers instead of names
-								
-								print ("enemyState: ",e.currentEnemyState)
-#								e.UpdateCardVisibility()
+									if enemyColor == colorName:
+										get_node("../../").attackInitiated.emit(power*2,e.power,false) #if the color match, weapon does double damage
+									else:
+										get_node("../../").attackInitiated.emit(power,e.power,false)
+									
+									# DO ALL THE STUFF HERE???
+									##################
+	#								e.queue_free() #destroys the enemy
+									$"../../AudioManager/CardSounds/Poof".play()
+									await get_tree().create_timer(.5).timeout
+									if e.currentEnemyState == 1: # 1=faceUp 2=attacked
+										e.currentEnemyState = 2 #idk why it wanted numbers instead of names
+									print ("enemyState: ",e.currentEnemyState)
 #								queue_free() #destroys the player's card
 								
 #								await get_tree().create_timer(.5).timeout
@@ -105,17 +108,14 @@ func _input(event):
 								#change deck size
 								##WIPPPP!!!!!!!!!!! 
 								
-								break #break just in case
+#								break #break just in case?
 								
 						if currentCardState != attacking:
 							isSettingUp = true
 							targetPos = defaultCardPos
 							currentCardState = reorganizingHand
 							cardIsSelected = false
-						
-#					else: #this is where the tutorial does damage
-				
-						
+
 enum{
 	discarded,
 	inHand,

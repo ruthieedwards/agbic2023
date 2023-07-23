@@ -30,7 +30,7 @@ var isDealingCard = false
 #var isEnemyBeingAttacked
 
 signal dealtCard
-signal attackInitiated(attackPower,enemyPower)
+signal attackInitiated(attackPower,enemyPower,isRescue)
 
 # i feel like this shouldn't be here but it is
 enum{

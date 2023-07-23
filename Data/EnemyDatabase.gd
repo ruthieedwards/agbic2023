@@ -1,6 +1,5 @@
 extends Node
-# Unitinfo = [Type, Power, Simple Name, Color, Special Text]
-# Eventinfo = [Type, Cost, Effect]
+# Info = [Type, Power, Simple Name, Color, Special Text]
 
 enum {Bubble1White, Bubble2White, Bubble1Red, BubbleRescue}
 

@@ -15,20 +15,23 @@ func _ready():
 func _process(delta):
 	pass
 
-func _on_attack_initiated(attackPower, enemyPower):
+func _on_attack_initiated(attackPower, enemyPower, isRescue):
 	
-	if attackPower >= enemyPower:
-		pass
-		#kill card
-		#maybe do an animation
-		#doesn't affect health
+	if isRescue == false:
+		if attackPower >= enemyPower:
+			pass
+			#kill card
+			#maybe do an animation
+			#doesn't affect health
 
-	if attackPower < enemyPower: 
-		currentHealth -= enemyPower - attackPower 
-		$Bars/HealthBar.value = currentHealth
-		$Bars/HealthText.text = str("Health: ",currentHealth)
-		
-	LoseGameCheck()
+		if attackPower < enemyPower: 
+			currentHealth -= enemyPower - attackPower 
+			$Bars/HealthBar.value = currentHealth
+			$Bars/HealthText.text = str("Health: ",currentHealth)
+			
+		LoseGameCheck()
+	else:
+		pass
 	
 func LoseGameCheck():
 	if currentHealth <= 0:
